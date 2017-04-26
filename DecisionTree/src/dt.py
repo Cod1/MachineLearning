@@ -3,31 +3,31 @@ import operator
 
 
 def calcShannonEnt(dataSet):
-    numEntries=len(dataSet)
+    numEntries = len(dataSet)
     
-    labelCounts={}
+    labelCounts = {}
 
     for featVec in dataSet:
-        currentLabel=featVec[-1]
+        currentLabel = featVec[-1]
        
         if currentLabel not in labelCounts.keys():
-            labelCounts[currentLabel]=0        
-        labelCounts[currentLabel]+=1
-    shannonEnt=0.0
+            labelCounts[currentLabel] = 0        
+        labelCounts[currentLabel] += 1
+    shannonEnt = 0.0
     
     for key in labelCounts:
          
-         prob =float(labelCounts[key])/numEntries        
-         shannonEnt-=prob*math.log(prob,2)
+         prob = float(labelCounts[key])/numEntries        
+         shannonEnt -= prob*math.log(prob,2)
 
     return shannonEnt           
     
 
 def createDataSet():
     
-    dataSet=[[1,0,'man'],[1,1,'man'],[0,1,'man'],[0,0,'women']]
-    labels=['throat','mustache']
-    return dataSet,labels
+    dataSet = [[1, 0, 'man'], [1, 1, 'man'], [0, 1, 'man'], [0, 0, 'women']]
+    labels = ['throat', 'mustache']
+    return dataSet, labels
 
 def splitDataSet(dataSet, axis, value):
     retDataSet = []
@@ -58,10 +58,6 @@ def chooseBestFeatureToSplit(dataSet):
             bestInfoGain = infoGain         #if better than current best, set to best
             bestFeature = i
     return bestFeature                      #returns an integer
-
-     
-
-
     
 def majorityCnt(classList):
     classCount={}
@@ -99,20 +95,21 @@ def classify(inputTree,featLabels,testVec):
     valueOfFeat = secondDict[key]
     if isinstance(valueOfFeat, dict): 
         classLabel = classify(valueOfFeat, featLabels, testVec)
-    else: classLabel = valueOfFeat
+    else: 
+        classLabel = valueOfFeat
     return classLabel
 
 def getResult():
-    dataSet,labels=createDataSet()
+    dataSet, labels = createDataSet()
    #  splitDataSet(dataSet,1,1)
     chooseBestFeatureToSplit(dataSet)
    # print  chooseBestFeatureToSplit(dataSet)
     #print calcShannonEnt(dataSet)
-    mtree=createTree(dataSet,labels)
+    mtree = createTree(dataSet, labels)
     print mtree
 
-    print classify(mtree,['throat','mustache'],[0,0])
+    print classify(mtree, ['throat', 'mustache'], [0, 0])
      
-if __name__=='__main__':   
+if __name__ == '__main__':   
     getResult()    
     
